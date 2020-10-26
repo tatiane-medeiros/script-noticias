@@ -10,12 +10,14 @@ headers = {'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleW
 
 #planilha
 data = pd.read_csv('noticias.csv')
-#data.head()
+
 print("Carregado")
 data['UF'] = data['UF'].astype(object)
 data['operações'] = data['operações'].astype(object)
 
-for i in range(100):
+n = len(data)
+
+for i in range(1000, n):
 
     url = data['link'].iloc[i]
 
@@ -30,12 +32,12 @@ for i in range(100):
     op = []
     obj_text = []
     for x in aux:
-        for y in x.findAll('p'):
+        #for y in x.findAll('p'):
             #print(y.text)
-            obj_text.append(y.text)
-        for y in x.findAll('div', class_='_1mf _1mj'):
+        #    obj_text.append(y.text)
+        #for y in x.findAll('div', class_='_1mf _1mj'):
             #print(y.text)
-            obj_text.append(y.text)
+        obj_text += (x.text.split('\n'))
 
     #print(obj_text[0])
 
@@ -50,10 +52,11 @@ for i in range(100):
     if aux:
         data.at[i,'UF'] = aux
 
-    if i == 50: print('50%')
+    print('['+str(i)+' / '+str(n)+']')
 
 
 print("Salvando...")
+data = data.set_index('titulo')
 data.to_csv('noticias.csv')    
 
 

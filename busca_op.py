@@ -4,24 +4,25 @@ def busca_par(text):
     oc = []
     res = ""
     f=0
-    while f<len(text):
-        f = text.find("Operação",f)
+    tx=text
+    while f<len(tx):
+        f = tx.find("Operação",f)
         if f == -1:
             break
         
-        name = text[f:]
+        tx = tx[f:]
         #print(name)
-        name = re.compile(r'[ .,!:;\n]').split(name)
+        name = re.compile(r'[ .,!:;"\n]').split(tx)
 
         j=1
         res = ""
         while (j < len(name) and name[j].istitle()):
             res +=' '+name[j]
             j+=1
-            if len(res) > 3:
-                if res[0] == ' ':
-                    res = "Operação"+res
-                if res not in oc: oc.append(res)
+        if len(res) > 3:
+            if res[0] == ' ':
+                res = "Operação"+res
+            if res not in oc: oc.append(res)
         f+=8
                 
     #print(oc)

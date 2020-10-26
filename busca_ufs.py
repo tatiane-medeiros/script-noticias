@@ -41,10 +41,13 @@ def busca_uf_par(text):
     if not res:
         for x in ufs.values():
             f = text.find(x)
-            if f != -1 and (text[f-1] in [' ','(']) and (text[f+2] in [' ',')',',','.']):
-                name = text[f:(f+len(x))]
-                print(name)
-                res.append(name)
+            try:
+                if f != -1 and (f == 0 or (text[f-1] in [' ','('])) and (text[f+2] in [' ',')',',','.']):
+                    name = text[f:(f+len(x))]
+                    #print(name)
+                    res.append(name)
+            except IndexError:
+                print("Oops")
             
     return res
     
@@ -54,7 +57,7 @@ def busca_ufs(t):
         r = busca_uf_par(x)
         for i in r:
             if i not in r2: r2.append(i)
-    print(r2)
+    #print(r2)
     return r2   
     
 
